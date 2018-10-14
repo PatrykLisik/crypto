@@ -104,3 +104,26 @@ def random_n_digits_prime(n: int) -> int:
         random_int = random_n_digits(n)
         if miller_rabin(random_int, 300):
             return random_int
+
+
+def gcd(a, b):
+    """
+    :param a: number
+    :param b: number
+    :return: the greatest common divisor
+    """
+    if a == 0:
+        return b
+    return gcd(b % a, a)
+
+
+def mod_inverse(number, m):
+    """
+    Modular multiplicative inverse of number mod m
+    :param number: integer to find inverse mod m of
+    :param m: prime number
+    :return: a^-1 mod m
+    """
+    if not gcd(number, m) == 1:
+        raise ValueError
+    return power_mod(number, m - 2, m)
