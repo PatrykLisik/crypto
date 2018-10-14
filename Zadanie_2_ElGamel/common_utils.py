@@ -83,3 +83,24 @@ def _miller_rabin_test(number: int, exponent2: int, multiplier: int) -> bool:
         if x == 1:
             return False
     return False
+
+
+def random_n_digits(n: int) -> int:
+    """
+    :param n: number of digits
+    :return: random n digit number
+    """
+    range_start = 10 ** (n - 1)
+    range_end = (10 ** n) - 1
+    return random.randint(range_start, range_end)
+
+
+def random_n_digits_prime(n: int) -> int:
+    """
+    :param n: number of digits
+    :return: random n digit prime
+    """
+    while True:
+        random_int = random_n_digits(n)
+        if miller_rabin(random_int, 300):
+            return random_int
