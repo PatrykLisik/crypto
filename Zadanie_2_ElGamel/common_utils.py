@@ -1,3 +1,6 @@
+import random
+
+
 def power_mod(base: int, exponent: int, modulo: int) -> int:
     """
     Function that computes base^exponent%modulo in an efficient way
@@ -12,12 +15,71 @@ def power_mod(base: int, exponent: int, modulo: int) -> int:
     while exponent > 0:
 
         # If exponent is odd, multiply
-        # base with result
         if (exponent & 1) == 1:
             result = (result * base) % modulo
 
-        # exponent must be even now
+        # exponent is even
         exponent = exponent >> 1  # exponent = exponent/2
         base = (base * base) % modulo
 
     return result
+
+
+def miller_rabin(n: int, k: int = 100) -> bool:
+    """
+    Miller_rabin primarily test 
+    :param n: number to perform test on
+    :param k: number of tests to perform
+    :return: aggregated result of k-number of tests
+    """
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    if n < 2:
+        return False
+
+    # n - 1 =2^exponent2*multiplier
+    exponent2, multiplier = _factor_two_power_r_mul_s(n)
+    for _ in range(k):
+        if not _miller_rabin_test(n, exponent2, multiplier):
+            return False
+    return True
+
+
+def _factor_two_power_r_mul_s(number: int) -> tuple:
+    """
+    Helper function that factors two numbers an exponent2 and a multiplier, such that number - 1 =2^exponent2*multiplier
+    :param number:
+    :return: tuple of two beforementioned integers the exponent2 and the multiplier
+    """
+    exponent2, multiplier = 0, number - 1
+    while multiplier % 2 == 0:
+        exponent2 += 1
+        multiplier //= 2
+    return exponent2, multiplier
+
+
+def _miller_rabin_test(number: int, exponent2: int, multiplier: int) -> bool:
+    """
+    Helper function that performs single Miller-Rabin test
+    :param number: odd number to perform test on
+    :param exponent2: integer such that number - 1 =2^exponent2*multiplier
+    :param multiplier: integer such that number - 1 =2^exponent2*multiplier
+    :return: False if number is composite
+    """
+
+    # This code is brought you by https://www.youtube.com/watch?v=qdylJqXCDGs
+    random_base = random.randrange(2, number - 1)
+    x = power_mod(random_base, multiplier, number)
+    if x == 1 or x == number - 1:
+        return True
+
+    for _ in range(exponent2 - 1):
+        x = power_mod(x, 2, number)
+        # x mod number == -1
+        if x == number - 1:
+            return True
+        if x == 1:
+            return False
+    return False
