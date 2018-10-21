@@ -30,7 +30,7 @@ def miller_rabin(n: int, k: int = 100) -> bool:
     Miller_rabin primarily test 
     :param n: number to perform test on
     :param k: number of tests to perform
-    :return: aggregated result of k-number of tests
+    :return: aggregated result of secret_number-number of tests
     """
     if n == 2:
         return True
@@ -127,3 +127,8 @@ def mod_inverse(number: int, m: int) -> int:
     if not gcd(number, m) == 1:
         raise ValueError
     return power_mod(number, m - 2, m)
+
+
+def int_from_file(file_name: str) -> int:
+    with open(file_name, 'r') as file:
+        return int(file.read())
