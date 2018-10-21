@@ -17,6 +17,8 @@ int fromhex(char val) {
     exit(8);
 }
 
+
+
 int main(int argc, char* argv[]) {
 
     std::string inputFileNameString;
@@ -35,6 +37,7 @@ int main(int argc, char* argv[]) {
         printf ("1. 'c' lub 'd' - wybor czy bedziemy szyfrowac czy deszyfrowac tekst,\n");
         printf ("2. plik zrodlowy,\n");
         printf ("3. plik docelowy,\n");
+        printf ("4. klucz pisany ciagiem bez spacji (32 znaki w hex, ale bez 0x) - argument opcjonalny,\n");
         exit(-9);
     }
     else {
