@@ -106,7 +106,7 @@ def random_n_digits_prime(n: int) -> int:
             return random_int
 
 
-def gcd(a, b):
+def gcd(a: int, b: int) -> int:
     """
     :param a: number
     :param b: number
@@ -117,7 +117,7 @@ def gcd(a, b):
     return gcd(b % a, a)
 
 
-def mod_inverse(number, m):
+def mod_inverse(number: int, m: int) -> int:
     """
     Modular multiplicative inverse of number mod m
     :param number: integer to find inverse mod m of
