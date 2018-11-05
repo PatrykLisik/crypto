@@ -72,7 +72,43 @@
     
     \end{titlepage}
 
+    \section{Wstęp}
+    Kryptosystem ElGamel'a jest szyfrem asymetrycznym bazującym na problemie logarytmu dyskretnego w ciele liczb całkowitych modulo duża liczba pierwsza.
+
     \section{Zasada działania}
+
+    \begin{enumerate}
+        \item Po stronie odbiorcy:
+        \begin{enumerate}
+            \item Wybór dużej liczby pierwszej -- p
+            \item Wybór $\alpha$ takiego, że $ \alpha \in \{ 2,3 \dots p-1 \} $
+            \item Wybór klucza prywatnego $k_{pr}$ takiego, że $ k_{pr}=d \in \{2,3 \dots p-2 \} $
+            \item Obliczenie klucza publicznego $k_{pb} = \beta \equiv \alpha ^ {k_{pr}} \pmod p$
+            \item Publikujemy $(\beta , \alpha ,p)$ jako klucz publiczny
+        \end{enumerate}
+        \item  Po stronie nadawcy:
+        \begin{enumerate}
+            \item Wybór klucza prywatnego $i \in \{2,3 \dots ,p-2\}$
+            \item Obliczenie klucza publicznego $k_E \equiv \alpha ^ {i} \pmod p$
+            \item Obliczanie klucza maskującego/sesji $k_M \equiv \beta ^i \pmod p$
+            \item Szyfrowanie wiadomości $Y \equiv X \cdot k_M \pmod p$, gdzie:
+            \begin{itemize}
+                \item X - niezaszyfrowana wiadomość
+                \item Y - zaszyfrowana wiadomość
+            \end{itemize}
+            \item Publikujemy $(Y,K_E)$
+        \end{enumerate}
+        \item Po stronie odbiorcy:
+        \begin{enumerate}
+            \item Obliczanie klucza maskującego/sesji $ k_M \equiv k_m ^ {d} \pmod p $
+            \item Deszyfrowanie wiadomości $X \equiv Y \cdot k_M^{-1} \pmod p$, gdzie:
+            \begin{itemize}
+                \item X - niezaszyfrowana wiadomość
+                \item Y - zaszyfrowana wiadomość
+            \end{itemize}
+            \item Profit
+        \end{enumerate}
+    \end{enumerate}
     \section{Generowanie dużych liczb pierwszych}
     \section{Implementacja}
     \end{document}
